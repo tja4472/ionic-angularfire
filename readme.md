@@ -38,13 +38,38 @@ module.exports = {
 ```
 This replaces node_modules/@ionic/app-scripts/config/rollup.config.js.
 
+### tsconfig.json
+```
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es5",
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
+    "types": [
+      "firebase"
+    ]    
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
+```
 ### app.module.ts
 ``` typescript
 import { AngularFireModule } from 'angularfire2';
-
-// Bodge: error TS2503: Cannot find namespace 'firebase'.
-// tslint:disable-next-line:no-unused-variable
-import * as firebase from 'firebase';
 
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
@@ -70,11 +95,12 @@ export class MyFirebaseAppConfig {
 }
 ```
 ## Problems
-Can't make custom config files work on Windows 10. Can't find the config file.
-
-https://github.com/driftyco/ionic-app-scripts
+    Can't make custom config files work on Windows 10. Can't find the config file.     
+    https://github.com/driftyco/ionic-app-scripts
 
 ## Links
-import named doesn't work with re-exported contents
+    import named doesn't work with re-exported contents.
+    https://github.com/rollup/rollup-plugin-commonjs/issues/35
 
-https://github.com/rollup/rollup-plugin-commonjs/issues/35
+    Getting Started with Ionic 2 RC0, Firebase 3 + AngularFire 2
+    https://playcode.org/getting-started-with-ionic-2-rc0-firebase-3-angularfire-2/
