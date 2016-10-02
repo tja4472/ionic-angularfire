@@ -95,8 +95,10 @@ export class MyFirebaseAppConfig {
 }
 ```
 ## Problems
-    Can't make custom config files work on Windows 10. Can't find the config file.     
-    https://github.com/driftyco/ionic-app-scripts
+This line in rollup.config.js makes it difficult to have a copy as a custom config file in a different folder.
+```
+var ngTemplate = require('../dist/plugins/ng-template').ngTemplate;
+```
 
 ## Links
     import named doesn't work with re-exported contents.
