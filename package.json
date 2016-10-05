@@ -22,10 +22,13 @@
     "ionic-native": "^2.0.3"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "0.0.27",
+    "@ionic/app-scripts": "0.0.28",
     "typescript": "^2.0.3"
   },
   "description": "my-side-menu: An Ionic project",
+  "config": {
+    "ionic_rollup": "./config/af-rollup.config.js"
+  },  
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",

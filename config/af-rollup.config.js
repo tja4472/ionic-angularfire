@@ -1,10 +1,15 @@
-var ngTemplate = require('../dist/plugins/ng-template').ngTemplate;
+var ngTemplate = require('../node_modules/@ionic/app-scripts/dist/plugins/ng-template').ngTemplate;
 var nodeResolve = require('rollup-plugin-node-resolve');
 var commonjs = require('rollup-plugin-commonjs');
+var globals = require('rollup-plugin-node-globals');
+var builtins = require('rollup-plugin-node-builtins');
+var json = require('rollup-plugin-json');
+
+console.log('Hello from the other side; I must have called 1000 times');
 
 // https://github.com/rollup/rollup/wiki/JavaScript-API
 
-module.exports = {
+var rollupConfig = {
   /**
    * entry: The bundle's starting point. This file will
    * be included, along with the minimum necessary code
@@ -27,29 +32,28 @@ module.exports = {
    * dest: the output filename for the bundle in the buildDir
    */
   dest: 'main.js',
- 
- 
- useStrict: false,
+
+   useStrict: false,
+
+/*
+        'node_modules/angularfire2/node_modules/firebase/firebase.js': ['initializeApp', 'auth', 'database'],
+        'node_modules/angularfire2/node_modules/firebase/firebase-browser.js': ['initializeApp', 'auth', 'database'],
+        'node_modules/firebase/firebase.js': ['initializeApp', 'auth', 'database'],
+
+*/
   /**
    * plugins: Array of plugin objects, or a single plugin object.
    * See https://github.com/rollup/rollup/wiki/Plugins for more info.
    */
   plugins: [
     ngTemplate(),
-commonjs(
-    {    
-/*
-        include: [
-        'node_modules/rxjs/**',
-        'node_modules/angularfire2/**',
-        'node_modules/firebase/**'
-        ],
-*/        
-        namedExports: {
-        'node_modules/angularfire2/node_modules/firebase/firebase.js': ['initializeApp', 'auth', 'database'],
+    builtins(),
+    commonjs({
+      namedExports: {
+        'node_modules/angularfire2/node_modules/firebase/firebase.js': ['initializeApp', 'auth', 'database'],        
         'node_modules/angularfire2/node_modules/firebase/firebase-browser.js': ['initializeApp', 'auth', 'database'],
-        'node_modules/firebase/firebase.js': ['initializeApp', 'auth', 'database'],
-        }
+        'node_modules/firebase/firebase-browser.js': ['initializeApp', 'auth', 'database'],
+      }
     }),
     nodeResolve({
       module: true,
@@ -57,7 +61,19 @@ commonjs(
       main: true,
       browser: true,
       extensions: ['.js']
-    })
+    }),
+    globals(),
+    json()
   ]
 
 };
+
+
+if (process.env.IONIC_ENV == 'prod') {
+  // production mode
+  rollupConfig.entry = '.tmp/app/main.prod.js';
+  rollupConfig.sourceMap = false;
+}
+
+
+module.exports = rollupConfig;

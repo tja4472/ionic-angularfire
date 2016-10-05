@@ -8,6 +8,10 @@ npm install -g ionic
 Started using sidemenu template
 ionic start my-side-menu sidemenu --v2
 ```
+## Now uses Ionic's instructions
+See: https://github.com/danbucholtz/ionic-rollup-angularfire2
+
+# Ignore this
 ## After npm install
 Copy the contents of config/af-rollup.config.js into node_modules/@ionic/app-scripts/config/rollup.config.js.
 
