@@ -14,6 +14,12 @@ See: https://github.com/danbucholtz/ionic-rollup-angularfire2
 Using CommonJS modules with rollup: 
 https://github.com/driftyco/ionic-app-scripts/issues/16
 
+http://ionicframework.com/docs/v2/resources/app-scripts/
+
+http://ionicframework.com/docs/v2/resources/third-party-libs/
+
+
+
 # Ignore this
 ## After npm install
 Copy the contents of config/af-rollup.config.js into node_modules/@ionic/app-scripts/config/rollup.config.js.
