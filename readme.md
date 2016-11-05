@@ -8,6 +8,27 @@ npm install -g ionic
 Started using sidemenu template
 ionic start my-side-menu sidemenu --v2
 ```
+
+### my-firebase-app-config.ts
+Create this file in app folder.
+``` typescript
+import {
+    FirebaseAppConfig
+} from 'angularfire2';
+
+export class MyFirebaseAppConfig {
+    static config: FirebaseAppConfig = {
+    apiKey: 'xxxxx',
+    authDomain: 'xxxxx',
+    databaseURL: 'xxxxx',
+    storageBucket: 'xxxxxx''
+  };
+}
+```
+
+
+# Ignore this
+
 ## Now uses Ionic's instructions
 See: https://github.com/danbucholtz/ionic-rollup-angularfire2
 
@@ -18,9 +39,6 @@ http://ionicframework.com/docs/v2/resources/app-scripts/
 
 http://ionicframework.com/docs/v2/resources/third-party-libs/
 
-
-
-# Ignore this
 ## After npm install
 Copy the contents of config/af-rollup.config.js into node_modules/@ionic/app-scripts/config/rollup.config.js.
 
