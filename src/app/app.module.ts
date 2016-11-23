@@ -1,15 +1,10 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 
 import { AngularFireModule } from 'angularfire2';
-
-// Bodge: error TS2503: Cannot find namespace 'firebase'.
-// tslint:disable-next-line:no-unused-variable
-// import * as firebase from 'firebase';
-
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
 @NgModule({
@@ -28,6 +23,10 @@ import { MyFirebaseAppConfig } from './my-firebase-app-config';
     Page1,
     Page2
   ],
-  providers: []
+  providers: [
+    // Here we tell the Angular ErrorHandling class
+    // that it should be using the IonicErrorHandler class for any errors
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
+  ]
 })
-export class AppModule {}
+export class AppModule { }
