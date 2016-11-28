@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Todos Page</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <button ion-button color="primary" (click)="loadData()">Load Data</button>
+    <button ion-button color="primary" (click)="createItem()">Create Item</button>
+
+    <p>
+        {{ todos$ | async | json}}
+    </p>
+</ion-content>
