@@ -15,7 +15,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 export class TodoModalPage {
     public todoForm;
 
-    private todo: Todo =
+    private formResult: Todo =
     {
         $key: '',
         description: null,
@@ -37,13 +37,13 @@ export class TodoModalPage {
         this.isEditing = !!paramTodo;
 
         if (this.isEditing) {
-            this.todo = paramTodo;
+            this.formResult = paramTodo;
         }
 
         this.todoForm = this.formBuilder.group({
-            name: [this.todo.name, Validators.required],
-            description: [this.todo.description],
-            isComplete: [this.todo.isComplete]
+            nameA: [this.formResult.name, Validators.required],
+            description: [this.formResult.description],
+            isComplete: [this.formResult.isComplete]
         });
     }
 
@@ -53,29 +53,40 @@ export class TodoModalPage {
     }
 
     save() {
-        console.log('save');
+        console.log('TodoModalPage:save');
+        console.log('TodoModalPage:todoForm>', this.todoForm);
 
-        /*
-            if (!this.todoForm.valid) {
-              return;
-            }
-        
-            console.log(this.todoForm.value);
-            console.log('this.todo>', this.todo);
-        
-            // Get error here with private todo when using popover.
-            // Hence local.
-        
-            let localTodo = assign(this.todo, {
-              name: this.todoForm.value.name,
-              isComplete: this.todoForm.value.isComplete
-            });
-        
-            // assign did not like optional property.
-            localTodo.description = this.todoForm.value.description;
-        
-            this.viewController.dismiss(localTodo);
-          }
-        */
+        if (!this.todoForm.valid) {
+            return;
+        }
+/*
+    if (this.userForm.dirty && this.userForm.valid) {
+      alert(`Name: ${this.userForm.value.name} Email: ${this.userForm.value.email}`);
+    }
+*/
+
+        // if(this.todoForm.touched)
+        console.log(this.todoForm.value);
+        console.log('this.formResult>', this.formResult);
+        this.formResult.description = this.todoForm.value.description;
+        this.formResult.isComplete = this.todoForm.value.isComplete;
+        this.formResult.name = this.todoForm.value.nameA;
+
+        this.viewController.dismiss(this.formResult);
+        /*        
+                    // Get error here with private todo when using popover.
+                    // Hence local.
+                
+                    let localTodo = assign(this.todo, {
+                      name: this.todoForm.value.name,
+                      isComplete: this.todoForm.value.isComplete
+                    });
+                
+                    // assign did not like optional property.
+                    localTodo.description = this.todoForm.value.description;
+                
+                    this.viewController.dismiss(localTodo);
+                  }
+                */
     }
 }

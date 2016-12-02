@@ -6,7 +6,7 @@
             </button>
         </ion-buttons>
         <ion-buttons end>
-            <button ion-button (click)="save()">
+            <button ion-button (click)="save()" [disabled]="!(this.todoForm.dirty && this.todoForm.valid)">
                 save      
             </button>
         </ion-buttons>
@@ -25,7 +25,7 @@
 
             <ion-item>
                 <ion-label floating color="primary">Name</ion-label>
-                <ion-input type="text" formControlName="name">
+                <ion-input type="text" formControlName="nameA">
                 </ion-input>
             </ion-item>
 
@@ -37,4 +37,11 @@
         </form>
     </ion-list>
 
+<h3>Form</h3>
+dirty: {{todoForm.dirty}}<br>
+invalid: {{todoForm.invalid}}<br>
+pristine: {{todoForm.pristine}}<br>
+touched: {{todoForm.touched}}<br>
+untouched: {{todoForm.untouched}}<br>
+valid: {{todoForm.valid}}
 </ion-content>

@@ -8,14 +8,9 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <h2>AngularFire result: '/todo/currentTodos'</h2>
+  <p>{{ angularfireResult$ | async | json}}</p>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
-<p>
-  {{ items | async | json}}
-</p>
+  <h2>Firebase result: '/textItems'</h2>
+  <p>{{ firebaseResult | json}}</p>
 </ion-content>

@@ -11,7 +11,18 @@
     <button ion-button color="primary" (click)="loadData()">Load Data</button>
     <button ion-button color="primary" (click)="createItem()">Create Item</button>
 
+    <todo-list 
+        [todos]="todos$ | async" 
+        (addItem)="addItem()"
+        (toggleCompleteItem)="toggleCompleteItem($event)"      
+        (editItem)="editItem($event)"
+        (reorderItems)="reorderItems($event)"
+        (removeItem)="removeItem($event)"      
+    ></todo-list>
+
+ <!-- 
     <p>
         {{ todos$ | async | json}}
     </p>
+-->    
 </ion-content>
