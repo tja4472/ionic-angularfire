@@ -8,12 +8,9 @@
 </ion-header>
 
 <ion-content padding>
-    <button ion-button color="primary" (click)="loadData()">Load Data</button>
-    <button ion-button color="primary" (click)="createItem()">Create Item</button>
-
     <todo-list 
         [todos]="todos$ | async" 
-        (addItem)="addItem()"
+        (addItem)="createItem()"
         (toggleCompleteItem)="toggleCompleteItem($event)"      
         (editItem)="editItem($event)"
         (reorderItems)="reorderItems($event)"

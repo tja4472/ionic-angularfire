@@ -4,9 +4,6 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 import { Todo } from '../models/todo';
 
-
-import {Observer} from "rxjs/Observer";
-
 const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
 
 // Multiple subscriptions on a FirebaseListObservable #574
@@ -19,48 +16,21 @@ const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
 
 @Injectable()
 export class TodoService {
-    private fb_CurrentTodos: FirebaseListObservable<any[]>; // readonly
-
-    // see https://embed.plnkr.co/0c9xQRHBgMrtsJXCZC3T/
-    public isLoading$: Observable<Boolean> = Observable.of(false);
-    private observer: Observer<boolean>;
+    private fb_CurrentTodos$: FirebaseListObservable<any[]>; 
+    private todos$: Observable<Todo[]>
 
     constructor(
         public af: AngularFire
     ) {
-        this.fb_CurrentTodos = af.database.list(FIREBASE_CURRENT_TODOS);
+        this.fb_CurrentTodos$ = af.database.list(FIREBASE_CURRENT_TODOS);
 
-/*
-        this.fb_CurrentTodos
-        .first()
-        .subscribe(() => console.log('loading:false'));
-*/
-
-        // this.isLoading$.next(true);
-        // this.observer.next()
+        this.todos$ = this.fb_CurrentTodos$
+            .map(x => x.map(d => fromFirebaseTodo(d)));
     }
 
     getData(): Observable<Todo[]> {
-        let result$: Observable<Todo[]>;
+        return this.todos$;
 
-        result$ = this.fb_CurrentTodos
-             .do(x => console.log('aaaaaaaa>', x))
-            .map(x => x.map(d => fromFirebaseTodo(d)))
-        .do(x => console.log('x>', x));
-/*
-        result$.subscribe(data => {
-            console.log('subscribe>', data);
-            this.isLoading$ = Observable.of(true);
-        });
-*/
-
-        return result$;
-        /*
-        return this.fb_CurrentTodos
-            .do(x => console.log('aaaaaaaa>', x))
-            .map(x => x.map(d => fromFirebaseTodo(d)))
-            .do(x => console.log('x>', x));
-*/
         /*        
                 let dummyData: Todo[] =
                     [{
@@ -87,7 +57,7 @@ export class TodoService {
     */
 
     removeItem(itemKey: string) {
-        this.fb_CurrentTodos.remove(itemKey);
+        this.fb_CurrentTodos$.remove(itemKey);
     }
 
     save(todo: Todo) {
@@ -95,10 +65,10 @@ export class TodoService {
 
         if (todo.$key === '') {
             // insert.
-            this.fb_CurrentTodos.push(toFirebaseTodo(todo));
+            this.fb_CurrentTodos$.push(toFirebaseTodo(todo));
         } else {
             // update.
-            this.fb_CurrentTodos.update(todo.$key, toFirebaseTodo(todo));
+            this.fb_CurrentTodos$.update(todo.$key, toFirebaseTodo(todo));
         }
     }
 }

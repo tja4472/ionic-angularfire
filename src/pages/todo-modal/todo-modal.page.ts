@@ -1,12 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
-// import { Observable } from 'rxjs/Observable';
-// import { TodoService } from '../../services/todo.service';
-// import { ItemSelectedOutput, ReorderItemsOutput, TodosInput, TodoListComponent } from '../../components/todo-list/todo-list.component';
+
 import { Todo } from '../../models/todo';
 import { Validators, FormBuilder } from '@angular/forms';
-// import { ControlMessages } from '../../components/control-messages/control-messages.component';
-// import { assign } from '../../utils/assign';
 
 @Component({
     selector: 'page-todo-modal',
