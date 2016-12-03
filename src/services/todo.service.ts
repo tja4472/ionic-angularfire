@@ -17,7 +17,7 @@ const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
 @Injectable()
 export class TodoService {
     private fb_CurrentTodos$: FirebaseListObservable<any[]>; 
-    private todos$: Observable<Todo[]>
+    readonly todos$: Observable<Todo[]>
 
     constructor(
         public af: AngularFire
