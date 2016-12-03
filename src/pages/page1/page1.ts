@@ -15,8 +15,14 @@ export class Page1 {
     angularfireResult$: FirebaseListObservable<any[]>;
     firebaseResult: any;
 
+    /*
+         @Inject(FirebaseApp) firebaseApp: firebase.app.App,
+         gives error with ngc.
+         ionic build android
+         https://github.com/angular/angular/issues/12631
+    */
     constructor(
-        @Inject(FirebaseApp) firebaseApp: firebase.app.App,
+        @Inject(FirebaseApp) firebaseApp: any,
         public af: AngularFire,
         public navCtrl: NavController,
     ) {
