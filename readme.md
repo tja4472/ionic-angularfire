@@ -25,3 +25,57 @@ export class MyFirebaseAppConfig {
   };
 }
 ```
+### Debugger for Chrome extension
+Google Chrome shortcut Target
+```
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222
+```
+package.json
+```
+"description": "my-side-menu: An Ionic project",
+"config": {
+    "ionic_source_map": "source-map"
+},
+```
+launch.json
+```
+{
+    "name": "Attach to Chrome, with sourcemaps",
+    "type": "chrome",
+    "request": "attach",
+    "port": 9222,
+    "sourceMaps": true,
+    "webRoot": "${workspaceRoot}",
+    "url":"http://localhost:8100/"          
+}
+```
+tsconfig.json
+```
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,    
+    "target": "es5"      
+  },
+  "include": [
+    "src/**/*.ts"
+  ],  
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
+```
+https://forum.ionicframework.com/t/how-to-debug-typescript-in-ionic-2-apps-using-vs-code-and-app-scripts-0-0-46/70023
