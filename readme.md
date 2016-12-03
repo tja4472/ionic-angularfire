@@ -26,7 +26,7 @@ export class MyFirebaseAppConfig {
 }
 ```
 ### Debugger for Chrome extension
-Google Chrome shortcut Target
+Google Chrome shortcut Target (Windows)
 ```
 "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222
 ```

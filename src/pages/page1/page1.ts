@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { AngularFire, FirebaseApp, FirebaseListObservable } from 'angularfire2';
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 
 const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
 
