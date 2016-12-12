@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { AngularFire, FirebaseApp, FirebaseListObservable } from 'angularfire2';
-// import * as firebase from 'firebase';
+import { AuthService } from '../../services/auth.service';
 
 const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
 
@@ -22,15 +22,21 @@ export class Page1 {
          https://github.com/angular/angular/issues/12631
     */
     constructor(
-        @Inject(FirebaseApp) firebaseApp: any,
-        public af: AngularFire,
-        public navCtrl: NavController,
+        @Inject(FirebaseApp) private firebaseApp: any,
+        private af: AngularFire,
+        private authService: AuthService,
+        private navCtrl: NavController,
     ) {
+        console.log('##Page1');
+        // console.log('authService.authenticated>', authService.authenticated);
+    }
 
-        this.angularfireResult$ = af.database.list(FIREBASE_CURRENT_TODOS);
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad');
+        this.angularfireResult$ = this.af.database.list(FIREBASE_CURRENT_TODOS);
 
         //
-        firebaseApp.database()
+        this.firebaseApp.database()
             .ref()
             .child('/textItems')
             .on('value', (snapshot: any) => {
@@ -43,4 +49,11 @@ export class Page1 {
             }
             );
     }
+
+    ionViewCanEnter(): boolean {
+        console.log('ionViewCanEnter');
+        console.log('authService.authenticated>', this.authService.authenticated);
+        return true;
+    }
+
 }
