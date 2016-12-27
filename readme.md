@@ -30,13 +30,6 @@ Google Chrome shortcut Target (Windows)
 ```
 "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222
 ```
-package.json
-```
-"description": "my-side-menu: An Ionic project",
-"config": {
-    "ionic_source_map": "source-map"
-},
-```
 launch.json
 ```
 {
@@ -45,7 +38,7 @@ launch.json
     "request": "attach",
     "port": 9222,
     "sourceMaps": true,
-    "webRoot": "${workspaceRoot}",
+    "webRoot": "${workspaceRoot}/www",
     "url":"http://localhost:8100/"          
 }
 ```
