@@ -8,7 +8,7 @@ import { LandingPage } from '../pages/landing/landing.page';
 import { LoginPage } from '../pages/login/login.page';
 import { TodosPage } from '../pages/todos/todos.page';
 //
-import { FirebaseAuth, FirebaseAuthState } from 'angularfire2';
+import { AngularFireAuth , FirebaseAuthState } from 'angularfire2';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,7 +22,7 @@ export class MyApp {
 
   constructor(
     // @Inject(FirebaseApp) firebaseApp: firebase.app.App,
-    public auth$: FirebaseAuth,
+    public auth$: AngularFireAuth ,
     public platform: Platform,
   ) {
     /*    
