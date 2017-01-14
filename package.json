@@ -22,7 +22,7 @@
     "@types/request": "0.0.33",
     "angularfire2": "2.0.0-beta.7",
     "firebase": "3.6.5",
-    "ionic-angular": "2.0.0-rc.5",
+    "ionic-angular": "2.0.0-rc.5-201701112208",
     "ionic-native": "2.2.11",
     "ionicons": "3.0.0",
     "rxjs": "5.0.0-beta.12",

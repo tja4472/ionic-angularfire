@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+
 import { NavController } from 'ionic-angular';
 // import { SignupPage } from '../signup/signup.page';
 
-import { Validators, FormBuilder } from '@angular/forms';
+
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,7 +13,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 export class LoginPage {
   // login: { username?: string, password?: string } = {};
   submitted = false;
-  public loginForm; 
+  public loginForm: FormGroup; 
 
   loginState$: any;
 
@@ -26,7 +28,7 @@ export class LoginPage {
     });   
   }
 
-  onLogin(form) {
+  onLogin(form: FormGroup) {
     this.submitted = true;
 
     if (form.valid) {

@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 
 import { Todo } from '../../models/todo';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'page-todo-modal',
     templateUrl: 'todo-modal.page.html',
 })
 export class TodoModalPage {
-    public todoForm;
+    public todoForm: FormGroup;
 
     private formResult: Todo =
     {
