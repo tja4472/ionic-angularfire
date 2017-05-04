@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
@@ -32,6 +33,8 @@ export class MyApp {
     // @Inject(FirebaseApp) firebaseApp: firebase.app.App,
     public auth$: AngularFireAuth ,
     public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,    
   ) {
     /*    
         let unsubscribe = firebaseApp.auth().onAuthStateChanged(user => {
@@ -77,7 +80,8 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();      
     });
   }
 

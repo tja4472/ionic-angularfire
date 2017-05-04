@@ -25,7 +25,7 @@ export class TodoService {
         this.fb_CurrentTodos$ = af.database.list(FIREBASE_CURRENT_TODOS);
 
         this.todos$ = this.fb_CurrentTodos$
-            .map(x => x.map(d => fromFirebaseTodo(d)));
+            .map(x => x.map((d:any) => fromFirebaseTodo(d)));
     }
 
     getData(): Observable<Todo[]> {

@@ -1,4 +1,6 @@
 import { ErrorHandler, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
@@ -13,6 +15,9 @@ import { TodoListComponent } from '../components/todo-list/todo-list.component';
 
 import { AngularFireModule } from 'angularfire2';
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -32,6 +37,7 @@ import { TodoService } from '../services/todo.service';
     TodoModalPage,
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(MyFirebaseAppConfig.config),
   ],
@@ -48,7 +54,8 @@ import { TodoService } from '../services/todo.service';
   providers: [
     AuthService,
     TodoService,
-
+    StatusBar,
+    SplashScreen,
     // Here we tell the Angular ErrorHandling class
     // that it should be using the IonicErrorHandler class for any errors
     { provide: ErrorHandler, useClass: IonicErrorHandler }
