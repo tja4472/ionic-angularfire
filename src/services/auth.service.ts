@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth , FirebaseAuthState } from 'angularfire2';
+import { Observable } from 'rxjs/Observable';
+import { AngularFireAuth } from 'angularfire2/auth';
+// Do not import from 'firebase' as you'd lose the tree shaking benefits
+import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
-    private authState: FirebaseAuthState = null;
+    private authState: firebase.User = null;
+
+user: Observable<firebase.User>;
 
     constructor(   
-        public auth$: AngularFireAuth 
+        public afAuth: AngularFireAuth 
     ) {
         console.log('AuthService');
+    this.user = afAuth.authState;
 
-        this.auth$.subscribe((state: FirebaseAuthState) => {
+        this.user.subscribe((state: firebase.User) => {
             console.log('AuthService:state', state);
             this.authState = state;
         });
@@ -21,7 +27,7 @@ export class AuthService {
     }
 
     signOut(): void {
-        this.auth$.logout();
+        this.afAuth.auth.signOut();
     }
     /*
         get authState(): FirebaseAuthState {

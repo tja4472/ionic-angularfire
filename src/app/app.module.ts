@@ -14,6 +14,8 @@ import { TodoModalPage } from '../pages/todo-modal/todo-modal.page';
 import { TodoListComponent } from '../components/todo-list/todo-list.component';
 
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -22,7 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
 
-import { AuthService  } from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { TodoService } from '../services/todo.service';
 
 @NgModule({
@@ -33,13 +35,16 @@ import { TodoService } from '../services/todo.service';
     LandingPage,
     LoginPage,
     TodosPage,
-    TodoListComponent,    
+    TodoListComponent,
     TodoModalPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(MyFirebaseAppConfig.config),
+    AngularFireModule.initializeApp(MyFirebaseAppConfig),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -61,6 +66,6 @@ import { TodoService } from '../services/todo.service';
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule { 
-  constructor(){}
+export class AppModule {
+  constructor() { }
 }

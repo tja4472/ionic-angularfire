@@ -1,4 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
+
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -9,7 +12,9 @@ import { LandingPage } from '../pages/landing/landing.page';
 import { LoginPage } from '../pages/login/login.page';
 import { TodosPage } from '../pages/todos/todos.page';
 //
-import { AngularFireAuth , FirebaseAuthState } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
+// Do not import from 'firebase' as you'd lose the tree shaking benefits
+import * as firebase from 'firebase/app';
 
 export interface PageInterface {
   title: string;
@@ -29,9 +34,11 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
+user: Observable<firebase.User>;
+
   constructor(
     // @Inject(FirebaseApp) firebaseApp: firebase.app.App,
-    public auth$: AngularFireAuth ,
+    public afAuth: AngularFireAuth ,
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,    
@@ -50,9 +57,11 @@ export class MyApp {
           }
         });
     */
-    this.auth$
+    this.user = afAuth.authState;
+
+    this.user
       .take(1)
-      .subscribe((state: FirebaseAuthState) => {
+      .subscribe((state: firebase.User) => {
         console.log('MyApp:state>>>', state);
         let authenticated = !!state;
 

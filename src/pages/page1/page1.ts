@@ -1,7 +1,9 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-import { AngularFire, FirebaseApp, FirebaseListObservable } from 'angularfire2';
+
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database'
+
 import { AuthService } from '../../services/auth.service';
 
 const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
@@ -22,8 +24,8 @@ export class Page1 {
          https://github.com/angular/angular/issues/12631
     */
     constructor(
-        @Inject(FirebaseApp) private firebaseApp: any,
-        private af: AngularFire,
+        // @Inject(FirebaseApp) private firebaseApp: any,
+       private db: AngularFireDatabase,
         private authService: AuthService,
         private navCtrl: NavController,
     ) {
@@ -33,9 +35,10 @@ export class Page1 {
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad');
-        this.angularfireResult$ = this.af.database.list(FIREBASE_CURRENT_TODOS);
+        this.angularfireResult$ = this.db.list(FIREBASE_CURRENT_TODOS);
 
         //
+/*        
         this.firebaseApp.database()
             .ref()
             .child('/textItems')
@@ -48,6 +51,7 @@ export class Page1 {
                 console.log('The read failed: ', error);
             }
             );
+*/            
     }
 
     ionViewCanEnter(): boolean {
