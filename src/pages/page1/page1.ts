@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
+import { FirebaseApp } from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database'
 
 import { AuthService } from '../../services/auth.service';
 
 const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
-
-// https://stackoverflow.com/questions/39067832/accessing-firebase-storage-with-angularfire2-angular2-rc-5/39069813#39069813
 
 @Component({
     templateUrl: 'page1.html'
@@ -17,15 +16,9 @@ export class Page1 {
     angularfireResult$: FirebaseListObservable<any[]>;
     firebaseResult: any;
 
-    /*
-         @Inject(FirebaseApp) firebaseApp: firebase.app.App,
-         gives error with ngc.
-         ionic build android
-         https://github.com/angular/angular/issues/12631
-    */
     constructor(
-        // @Inject(FirebaseApp) private firebaseApp: any,
-       private db: AngularFireDatabase,
+        private firebaseApp: FirebaseApp,
+        private db: AngularFireDatabase,
         private authService: AuthService,
         private navCtrl: NavController,
     ) {
@@ -37,8 +30,6 @@ export class Page1 {
         console.log('ionViewDidLoad');
         this.angularfireResult$ = this.db.list(FIREBASE_CURRENT_TODOS);
 
-        //
-/*        
         this.firebaseApp.database()
             .ref()
             .child('/textItems')
@@ -51,7 +42,6 @@ export class Page1 {
                 console.log('The read failed: ', error);
             }
             );
-*/            
     }
 
     ionViewCanEnter(): boolean {
