@@ -6,24 +6,23 @@ import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
-    private authState: firebase.User = null;
+    private authState$: Observable<firebase.User>;
+    private currentUser: firebase.User;
 
-user: Observable<firebase.User>;
-
-    constructor(   
-        public afAuth: AngularFireAuth 
+    constructor(
+        public afAuth: AngularFireAuth
     ) {
         console.log('AuthService');
-    this.user = afAuth.authState;
+        this.authState$ = afAuth.authState;
 
-        this.user.subscribe((state: firebase.User) => {
-            console.log('AuthService:state', state);
-            this.authState = state;
+        this.authState$.subscribe((user: firebase.User) => {
+            console.log('AuthService:user', user);
+            this.currentUser = user;
         });
     }
 
     get authenticated(): boolean {
-        return this.authState !== null;
+        return this.currentUser !== null;
     }
 
     signOut(): void {
