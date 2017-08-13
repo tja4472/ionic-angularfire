@@ -16,6 +16,7 @@ import { TodoListComponent } from '../components/todo-list/todo-list.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireOfflineModule } from 'angularfire2-offline';
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -42,9 +43,9 @@ import { TodoService } from '../services/todo.service';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(MyFirebaseAppConfig),
+    AngularFireOfflineModule,     
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+// import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AfoListObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
 import { Todo } from '../models/todo';
 
 const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
@@ -16,16 +17,22 @@ const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
 
 @Injectable()
 export class TodoService {
-    private fb_CurrentTodos$: FirebaseListObservable<any[]>; 
+    private fb_CurrentTodos$: AfoListObservable<any[]>;
     readonly todos$: Observable<Todo[]>
 
     constructor(
-       db: AngularFireDatabase,
+        db: AngularFireOfflineDatabase,
     ) {
+        console.log('TodoService:constructor');
         this.fb_CurrentTodos$ = db.list(FIREBASE_CURRENT_TODOS);
 
         this.todos$ = this.fb_CurrentTodos$
-            .map(x => x.map((d:any) => fromFirebaseTodo(d)));
+            .map(x => x.map((d: any) => fromFirebaseTodo(d)));
+/*
+        this.fb_CurrentTodos$.subscribe(x => {
+            console.log('this.fb_CurrentTodos$.subscribe', x);
+        });       
+*/        
     }
 
     getData(): Observable<Todo[]> {
