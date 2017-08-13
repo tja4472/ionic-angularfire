@@ -16,7 +16,7 @@ import { TodoListComponent } from '../components/todo-list/todo-list.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireOfflineModule } from 'angularfire2-offline';
+
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -27,6 +27,7 @@ import './rxjs-operators';
 
 import { AuthService } from '../services/auth.service';
 import { TodoService } from '../services/todo.service';
+import { AngularFireOfflineModule } from "../dsrc/index";
 
 @NgModule({
   declarations: [

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 // import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { AfoListObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
+// import { AfoListObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
 import { Todo } from '../models/todo';
+import { AfoListObservable, AngularFireOfflineDatabase } from "../dsrc/index";
 
 const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
 
@@ -28,11 +29,11 @@ export class TodoService {
 
         this.todos$ = this.fb_CurrentTodos$
             .map(x => x.map((d: any) => fromFirebaseTodo(d)));
-/*
+
         this.fb_CurrentTodos$.subscribe(x => {
             console.log('this.fb_CurrentTodos$.subscribe', x);
-        });       
-*/        
+        });
+
     }
 
     getData(): Observable<Todo[]> {
@@ -66,17 +67,49 @@ export class TodoService {
     removeItem(itemKey: string) {
         this.fb_CurrentTodos$.remove(itemKey);
     }
+    // {$key: "-KXpuvXAo3jYqlp5s8OH", description: "222", index: 1, isComplete: false, name: "second"}
+    aaaaa() {
+        console.log('aaaaa');
 
+        let desc: string = 'a' + Math.random();
+        let zzz: FirebaseTodo = { description: desc, index: 1, isComplete: false, name: "second" };
+        this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", zzz);
+        //this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", {description: desc, index: 1, isComplete: false, name: "second"});  
+    }
     save(todo: Todo) {
         console.log('save>', todo);
+
+
 
         if (todo.$key === '') {
             // insert.
             this.fb_CurrentTodos$.push(toFirebaseTodo(todo));
         } else {
             // update.
-            this.fb_CurrentTodos$.update(todo.$key, toFirebaseTodo(todo));
+            // this.fb_CurrentTodos$.update(todo.$key, toFirebaseTodo(todo));
+            /*
+                        // Single subscribe.
+                        let desc: string = 'a' + Math.random();
+                        let zzz: FirebaseTodo = {description: desc, index: 1, isComplete: false, name: "second"};
+                        this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", zzz);
+            */
+            // Double subscribe. Property order different.
+            let zzzTodo = Object.assign({}, todo);
+            let desc: string = 'a' + Math.random();
+            let zzz1: FirebaseTodo = {
+                name: zzzTodo.name,
+                isComplete: zzzTodo.isComplete,
+                index: zzzTodo.index,
+                description: desc,
+            };
+            let zzz: FirebaseTodo = { description: desc, index: 1, isComplete: false, name: "second" };
+
+            console.log('A>', zzz);
+            console.log('B>', zzz1);
+
+            this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", zzz1);
         }
+
     }
 }
 

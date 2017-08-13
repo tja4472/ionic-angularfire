@@ -41,6 +41,9 @@ export class TodosPage {
 
     modal.present()
   }
+aa() {
+  this.todoService.aaaaa();
+}
 
   toggleCompleteItem(item: Todo) {
     console.log('completeItem:item>', item);
