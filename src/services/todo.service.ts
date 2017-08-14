@@ -71,62 +71,62 @@ export class TodoService {
     aaaaa() {
         console.log('aaaaa');
 
-        let desc: string = 'a' + Math.random();
-        let zzz: FirebaseTodo = { description: desc, index: 1, isComplete: false, name: "second" };
-        this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", zzz);
-        //this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", {description: desc, index: 1, isComplete: false, name: "second"});  
+        //let zzz: FirebaseTodo = { description: desc, index: 1, isComplete: false, name: "second" };
+        // this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", zzz);
+        /*
+                // one subscribe call.
+                let desc: string = 'a' + Math.random();
+                this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH",
+                    {
+                        description: desc,
+                        index: 1,
+                        isComplete: false,
+                        name: "second",
+                    });
+        */
+
+        // two subscribe call.      
+                let desc: string = 'a' + Math.random();
+                this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH",
+                    {
+                        description: desc,
+                        isComplete: false,                
+                        index: 1,
+                        name: "second",
+                    });        
+
     }
     save(todo: Todo) {
         console.log('save>', todo);
-
-
 
         if (todo.$key === '') {
             // insert.
             this.fb_CurrentTodos$.push(toFirebaseTodo(todo));
         } else {
             // update.
-            // this.fb_CurrentTodos$.update(todo.$key, toFirebaseTodo(todo));
-            /*
-                        // Single subscribe.
-                        let desc: string = 'a' + Math.random();
-                        let zzz: FirebaseTodo = {description: desc, index: 1, isComplete: false, name: "second"};
-                        this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", zzz);
-            */
-            // Double subscribe. Property order different.
-            let zzzTodo = Object.assign({}, todo);
-            let desc: string = 'a' + Math.random();
-            let zzz1: FirebaseTodo = {
-                name: zzzTodo.name,
-                isComplete: zzzTodo.isComplete,
-                index: zzzTodo.index,
-                description: desc,
-            };
-            let zzz: FirebaseTodo = { description: desc, index: 1, isComplete: false, name: "second" };
-
-            console.log('A>', zzz);
-            console.log('B>', zzz1);
-
-            this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH", zzz1);
+            this.fb_CurrentTodos$.update(todo.$key, toFirebaseTodo(todo));
         }
 
     }
 }
 
+
 interface FirebaseTodo {
     description?: string;
     index: number;
-    name: string;
     isComplete: boolean;
+    name: string;    
 }
 
 function toFirebaseTodo(todo: Todo): FirebaseTodo {
-    //
+    // Important!
+    // angularfire2-offline: Properties have to be alphabetical.
+    // https://github.com/adriancarriger/angularfire2-offline/issues/57
     let result: FirebaseTodo = {
         description: todo.description,
         index: todo.index,
+        isComplete: todo.isComplete,        
         name: todo.name,
-        isComplete: todo.isComplete
     };
 
     console.log('toFirebaseTodo>', result);

@@ -79,6 +79,6 @@ aa() {
 
   removeItem(item: Todo) {
     console.log('removeItem:item>', item);
-    // this.todoService.remove(item);
+    this.todoService.removeItem(item.$key);
   }
 }   
