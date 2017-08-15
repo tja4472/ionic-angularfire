@@ -1,27 +1,29 @@
 <ion-header>
     <ion-navbar>
-        <button ion-button menuToggle>
+        <button ion-button
+                menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <button ion-button (click)='aa()'>aaaa</button>    
+        <button ion-button
+                (click)='aa()'>aa</button>
+        <button ion-button
+                (click)='bb()'>bb</button>
         <ion-title>Todos Page</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <todo-list 
-        [todos]="todos$ | async" 
-        (addItem)="createItem()"
-        (toggleCompleteItem)="toggleCompleteItem($event)"      
-        (editItem)="editItem($event)"
-        (reorderItems)="reorderItems($event)"
-        (removeItem)="removeItem($event)"      
-    ></todo-list>
+    <todo-list [todos]="todos$ | async"
+               (addItem)="createItem()"
+               (toggleCompleteItem)="toggleCompleteItem($event)"
+               (editItem)="editItem($event)"
+               (reorderItems)="reorderItems($event)"
+               (removeItem)="removeItem($event)"></todo-list>
 
- <!-- 
+    <!-- 
     <p>
         {{ todos$ | async | json}}
     </p>
--->    
+-->
 
 </ion-content>

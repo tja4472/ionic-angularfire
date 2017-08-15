@@ -69,17 +69,12 @@ export class InternalListObservable<T> extends ReplaySubject<T> {
    * Only calls next if the new value is unique
    */
   uniqueNext(newValue) {
-    console.log('uniqueNext');
     // Sort
     if (this.previousValue) { this.previousValue.sort((a, b) => a.$key - b.$key); }
     if (newValue) { newValue.sort((a, b) => a.$key - b.$key); }
 
-    console.log('uniqueNext:previousValue', this.previousValue);
-    console.log('uniqueNext:newValue', newValue);
-
-    if (this.updated > 1 || (stringify(this.previousValue) !== stringify(newValue))) {
+    if (this.updated > 1 || (stringify(this.previousValue) !== stringify(newValue)) ) {
       this.previousValue = Object.assign([], newValue);
-      console.log('uniqueNext:this.next(newValue) ***********');
       this.next(newValue);
       this.updated++;
     }
@@ -103,13 +98,13 @@ export class InternalListObservable<T> extends ReplaySubject<T> {
     promise.offline = this.offlineWrite(promise, 'remove', [key]);
     return promise;
   }
-  /**
-  * Convenience method to save an offline write
-  *
-  * @param promise [the promise](https://goo.gl/5VLgQm) returned by calling an AngularFire2 method
-  * @param type the AngularFire2 method being called
-  * @param args an optional array of arguments used to call an AngularFire2 method taking the form of [newValue, options]
-  */
+   /**
+   * Convenience method to save an offline write
+   *
+   * @param promise [the promise](https://goo.gl/5VLgQm) returned by calling an AngularFire2 method
+   * @param type the AngularFire2 method being called
+   * @param args an optional array of arguments used to call an AngularFire2 method taking the form of [newValue, options]
+   */
   private offlineWrite(promise, type: string, args: any[]) {
     return OfflineWrite(
       promise,
@@ -123,7 +118,6 @@ export class InternalListObservable<T> extends ReplaySubject<T> {
    * Sends the the current {@link value} to all subscribers
    */
   private updateSubscribers() {
-    console.log('updateSubscribers');
     this.uniqueNext(<any>this.value);
   }
 }

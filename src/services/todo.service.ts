@@ -4,7 +4,9 @@ import { Observable } from 'rxjs/Observable';
 // import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 // import { AfoListObservable, AngularFireOfflineDatabase } from 'angularfire2-offline/database';
 import { Todo } from '../models/todo';
-import { AfoListObservable, AngularFireOfflineDatabase } from "../dsrc/index";
+import { AfoListObservable, AngularFireOfflineDatabase } from "../dsrc/database";
+// import { AfoListObservable, AngularFireOfflineDatabase } from "../dsrc/index";
+// import { AngularFireOfflineModule } from "../dsrc/angularfire2-offline";
 
 const FIREBASE_CURRENT_TODOS = '/todo/currentTodos';
 
@@ -134,7 +136,7 @@ function toFirebaseTodo(todo: Todo): FirebaseTodo {
 }
 
 function fromFirebaseTodo(x: any): Todo {
-    console.log('fromFirebaseTodo');
+    console.log('fromFirebaseTodo>', x);
 
     let result: Todo = {
         $key: x.$key,

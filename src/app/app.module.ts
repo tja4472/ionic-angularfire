@@ -27,7 +27,9 @@ import './rxjs-operators';
 
 import { AuthService } from '../services/auth.service';
 import { TodoService } from '../services/todo.service';
-import { AngularFireOfflineModule } from "../dsrc/index";
+// import { AngularFireOfflineDatabase } from "../dsrc/database";
+import { AngularFireOfflineModule } from "../dsrc/angularfire2-offline";
+
 
 @NgModule({
   declarations: [

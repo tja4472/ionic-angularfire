@@ -12,6 +12,12 @@ import { Todo } from '../../models/todo';
 
 import { TodoModalPage } from '../todo-modal/todo-modal.page';
 
+interface IItem {
+  a: string,
+  b: string;
+  c: string;
+}
+
 @Component({
   selector: 'todos-page',
   templateUrl: 'todos.page.html'
@@ -41,10 +47,43 @@ export class TodosPage {
 
     modal.present()
   }
-aa() {
-  this.todoService.aaaaa();
-}
+  aa() {
+    this.todoService.aaaaa();
+  }
 
+  bb() {
+    console.log('bb');
+    let objectA: IItem = {
+      a: '1',
+      b: '2',
+      c: '3',
+    };
+    let objectB: IItem = { // Different order.
+      c: '3',
+      a: '1',
+      b: '2',
+    };    
+    console.log('objectA>', objectA);
+    console.log('objectB>', objectB);
+    
+    let objectC = {...objectA, b: '22'};
+    console.log('objectC>', objectC); // Order maintained.
+    let objectD = {...objectA, objectB};
+    console.log('objectD>', objectD); // ObjectB added to ObjectA as property.
+
+    let objectE = Object.assign(objectA, objectB);
+    console.log('objectE>', objectE); // Order maintained.
+
+    let objectF: IItem = Object.assign({}, objectB);
+    console.log('objectF>', objectF); // Order not maintained.    
+
+    let objectH: {
+      b: '2#####',
+    };
+
+    let objectI = Object.assign(objectA, objectH);
+    console.log('objectI>', objectI); // Order maintained.    
+  }
   toggleCompleteItem(item: Todo) {
     console.log('completeItem:item>', item);
   }
