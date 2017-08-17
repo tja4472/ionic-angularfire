@@ -92,9 +92,9 @@ export class TodoService {
                 this.fb_CurrentTodos$.update("-KXpuvXAo3jYqlp5s8OH",
                     {
                         description: desc,
-                        isComplete: false,                
-                        index: 1,
-                        name: "second",
+                        // isComplete: false,                
+                        // index: 1,
+                        name: "s"+ desc,
                     });        
 
     }

@@ -5,7 +5,7 @@ import { ReplaySubject } from 'rxjs';
 import { EmulateList } from './emulate-list';
 import { LocalUpdateService } from '../offline-storage/local-update-service';
 import { OfflineWrite } from '../offline-storage/offline-write';
-
+import { unwrap } from '../database';
 export class InternalListObservable<T> extends ReplaySubject<T> {
   /**
    * The Firebase path used for the related FirebaseListObservable
@@ -70,11 +70,23 @@ export class InternalListObservable<T> extends ReplaySubject<T> {
    */
   uniqueNext(newValue) {
     // Sort
+    console.log('##uniqueNext');
+    console.log('newValue>', newValue);
+    console.log('previousValue>', this.previousValue);
+    console.log('stringify(newValue)>', stringify(newValue));
+
     if (this.previousValue) { this.previousValue.sort((a, b) => a.$key - b.$key); }
     if (newValue) { newValue.sort((a, b) => a.$key - b.$key); }
 
-    if (this.updated > 1 || (stringify(this.previousValue) !== stringify(newValue)) ) {
-      this.previousValue = Object.assign([], newValue);
+    if (this.updated > 1 || (stringify(this.previousValue) !== stringify(newValue))) {
+      // this.previousValue = Object.assign([], newValue);
+      let deepClone = Object.assign([], newValue);
+      deepClone = deepClone.map(x => {
+        let b = Object.assign({}, x);
+        unwrap(b.$key, b, () => b !== null);
+        return b;
+      });
+      this.previousValue = deepClone;
       this.next(newValue);
       this.updated++;
     }
@@ -86,6 +98,10 @@ export class InternalListObservable<T> extends ReplaySubject<T> {
     return promise;
   }
   update(key: string, value: any) {
+    console.log('##update');
+    console.log(key, value);
+    console.log('this.value>', this.value);
+
     this.emulate('update', key, value);
 
     const promise = this.ref.update(key, value);
@@ -98,13 +114,13 @@ export class InternalListObservable<T> extends ReplaySubject<T> {
     promise.offline = this.offlineWrite(promise, 'remove', [key]);
     return promise;
   }
-   /**
-   * Convenience method to save an offline write
-   *
-   * @param promise [the promise](https://goo.gl/5VLgQm) returned by calling an AngularFire2 method
-   * @param type the AngularFire2 method being called
-   * @param args an optional array of arguments used to call an AngularFire2 method taking the form of [newValue, options]
-   */
+  /**
+  * Convenience method to save an offline write
+  *
+  * @param promise [the promise](https://goo.gl/5VLgQm) returned by calling an AngularFire2 method
+  * @param type the AngularFire2 method being called
+  * @param args an optional array of arguments used to call an AngularFire2 method taking the form of [newValue, options]
+  */
   private offlineWrite(promise, type: string, args: any[]) {
     return OfflineWrite(
       promise,

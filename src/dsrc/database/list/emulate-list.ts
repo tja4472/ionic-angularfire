@@ -57,11 +57,22 @@ export class EmulateList {
    * @param value the new value to be used by the given method
    * @param key can be used for remove and required for update
    */
+
+
   private processEmulation(method, value, key) {
+    console.log('##processEmulation');
+    console.log('method>', method);
+    console.log('value>', value);
+    console.log('key>', key);
+
     if (this.observableValue === null) {
       this.observableValue = [];
     }
     const newValue = unwrap(key, value, () => value !== null);
+
+    console.log('newValue>', newValue);
+    console.log('this.observableValue>', this.observableValue);
+
     if (method === 'push') {
       let found = false;
       this.observableValue.forEach((item, index) => {
@@ -75,12 +86,33 @@ export class EmulateList {
       }
     } else if (method === 'update') {
       let found = false;
-      this.observableValue.forEach((item, index) => {
-        if (item.$key === key) {
-          found = true;
-          this.observableValue[index] = newValue;
-        }
-      });
+      let itemToUpdateIndex = this.observableValue.findIndex(item => item.$key == key);
+
+      if (itemToUpdateIndex > -1) {
+        found = true;
+
+        const cc_newValue = Object.assign(this.observableValue[itemToUpdateIndex], value );
+        this.observableValue[itemToUpdateIndex] = cc_newValue;
+        console.log('cc_newValue>', cc_newValue);
+/*
+        const aa_newValue = { ...this.observableValue[itemToUpdateIndex], ...value };
+        console.log('aa_newValue>', aa_newValue);
+
+        const bb_newValue = unwrap(key, aa_newValue, () => aa_newValue !== null);
+        console.log('bb_newValue>', bb_newValue);
+
+        this.observableValue[itemToUpdateIndex] = bb_newValue;
+*/        
+      }
+
+      /*
+            this.observableValue.forEach((item, index) => {
+              if (item.$key === key) {
+                found = true;
+                this.observableValue[index] = newValue;
+              }
+            });
+      */
       if (!found) {
         this.observableValue.push(newValue);
       }
